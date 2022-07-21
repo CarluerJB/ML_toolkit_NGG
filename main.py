@@ -133,14 +133,6 @@ if gridSearch:
         print("[ERROR] Method is unkonwn or is not compatible with gridSearch parameter")
     exit(0)
 
-if method == "HDBSCANNER":
-    dA = DataAnalyser(savepath = save_path)
-    dA.Hdbscan(np.append(datas.get_y_train(), datas.get_y_test()))
-    exit(0)
-if method == "DensityPlot":
-    dA = DataAnalyser(savepath = save_path)
-    dA.DensityPlot(np.append(datas.get_y_train(), datas.get_y_test()))
-    exit(0)
 
 if method == "RF":
     print("[INFO] Running Random Forest")
@@ -154,23 +146,6 @@ elif method == "DNN":
     dnn1D.plot(save_only=True, save_path=save_path+"DNN/" + model_ID + "/")
     with open(save_path+"DNN/" + model_ID + "/" + "info.txt", 'w') as f:
         f.write(str(args))
-elif method == "Auto_Classifier":
-    print("[INFO] Running Deep Neural Network Auto Classifier")
-    classifer = DNN_auto_Classifier(data=datas, json_models=json_models[model_ID], live=live, early_stopping=early_stopping, epoch=epoch,iteration=iteration,batch_size=batchsize, verbose=verbose)
-    classifer.run(save_path=save_path+"DNN_auto_classifier/" + model_ID + "/")
-    classifer.plot(save_only=True, save_path=save_path+"DNN_auto_classifier/" + model_ID + "/")
-elif method == 'TSNE':
-    print("[INFO] Running TSNE Visualisator")
-    visualisator = TSNE_Visualisator(data = datas)
-    visualisator.build_model_from_dict({"component" : component, "learning_rate" : 200.0, "init_state" : "random"})
-    visualisator.run()
-    visualisator.plot(save_path+"TSNE/", live=live)
-elif method == 'UMAP':
-    print("[INFO] Running UMAP Visualisator")
-    visualisator = UMAP_Visualisator(data = datas)
-    visualisator.build_model_from_dict({"component" : component, "random_state" : 123, "init_state" : "random"})
-    visualisator.run()
-    visualisator.plot(save_path+"UMAP/", live=live)
 elif method == "SVM":
     print("[INFO] Running SVM Visualisator")
     predictor = SVM_Predictor(data = datas)
@@ -226,10 +201,6 @@ elif method == "DNN_Classifier":
     dnn1D.plot(save_only=True, save_path=save_path+"DNN_Classifier/" + model_ID + "/")
     with open(save_path+"DNN_Classifier/" + model_ID + "/" + "info.txt", 'w') as f:
         f.write(str(args))
-elif method == 'TSNE_Classifier':
-    print("[INFO] Running TSNE Visualisator Classifier")
-elif method == 'UMAP_Classifier':
-    print("[INFO] Running UMAP Visualisator Classifier")
 elif method == "SVM_Classifier":
     print("[INFO] Running SVM Visualisator Classifier")
     predictor = SVM_Classifier(data = datas)
