@@ -1,0 +1,35 @@
+{
+    "Dense_tutorial" :
+    {
+            "inputs" : {
+                "0" : null
+    
+            },
+            "layers" : {
+                "1" : [
+                    {"inputs" : {"layer" : 0, "node" : 0}, "type": "BatchNorm"}
+                ], 
+                "2" : [
+                    {"inputs" : {"layer" : 1, "node" : 0}, "type" : "Dense", "size" : 17, "activation" : "relu"}
+                ],
+                "3" : [
+                {"inputs" : {"layer" : 2, "node" : 0}, "type" : "Dropout", "size" : null, "ratio" : 0.3}
+            ], 
+            "4" : [
+                {"inputs" : {"layer" : 3, "node" : 0}, "type" : "Dense", "size" : 17, "activation" : "relu"}
+            ],
+            "5" : [
+                {"inputs" : {"layer" : 4, "node" : 0}, "type" : "Dropout", "size" : null, "ratio" : 0.3}
+            ], 
+            "6" : [
+                {"inputs" : {"layer" : 5, "node" : 0}, "type" : "Dense", "size" : 17, "activation" : "relu"}
+            ],
+            "7" : [
+                {"inputs" : {"layer" : 6, "node" : 0}, "type" : "Dropout", "size" : null, "ratio" : 0.3}
+            ],
+                "8" : [
+                    {"inputs" : {"layer" : 7, "node" : 0}, "type" : "Dense", "size" : 1, "activation" : "relu"}
+                ]
+            } 
+    }
+} 

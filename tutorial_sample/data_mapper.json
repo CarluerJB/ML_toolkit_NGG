@@ -1,0 +1,19 @@
+{
+    "Y" : {
+        "load" : {
+            "header" : 0, "sep" : ","
+        }, 
+        "build" : [
+            {"method" : "std", "sub_id" : [0, 1152]}
+        ]
+    },
+    "X" : {
+        "load" : {
+            "header" : null, "sep" : " "
+        },
+        "build" : [
+            {"method" : "by_top", "sub_id" : "ktop1D"}, 
+            {"method" : "product", "sub_id" : "ktop2D"} 
+        ]
+    }
+}

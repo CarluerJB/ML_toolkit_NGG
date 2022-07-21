@@ -1,0 +1,21 @@
+python main.py\
+        -p phenotype_test\
+        -1D 30\
+        -2D 30\
+        -m Dense_tutorial\
+        -epoch 200\
+        -it 1\
+        -bs 20\
+        -vb True\
+        -method "DNN"\
+        -norm True\
+        -component 2\
+        -save_path "tutorial_sample/out/"\
+        -json_model "tutorial_sample/predictor_model.json"\
+        -data_mapper "tutorial_sample/data_mapper.json"\
+        -nth_elem_1D_path "tutorial_sample/nth_elem_1D.txt"\
+        -nth_elem_2D_path "tutorial_sample/nth_elem_2D.txt"\
+        -ID_data_path "tutorial_sample/ID_test.txt"\
+        -x_data_path "tutorial_sample/X_test.txt"\
+        -y_data_path "tutorial_sample/Y_test.txt"
+ 
