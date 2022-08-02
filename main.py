@@ -26,7 +26,6 @@ batchsize = int(args['-bs']) if '-bs' in args.keys() else 10
 verbose = args['-vb']=="True" if '-vb' in args.keys() else False
 method = args['-method'] if '-method' in args.keys() else "DNN"
 newXdim = int(args['-redim']) if '-redim' in args.keys() else None
-dataset = args['-dataset'] if '-dataset' in args.keys() else "ionome"
 component = int(args['-component']) if '-component' in args.keys() else 3
 categorize_data = args['-categorize'] if '-categorize' in args.keys() else None
 nb_cluster = int(args['-nb_cluster']) if '-nb_cluster' in args.keys() else None
@@ -57,59 +56,30 @@ with open(data_mapper_path, "r") as f:
         data_mapper["Y"]["build"][i_elem]["sub_id"] = {'line' : data_mapper["Y"]["build"][i_elem]["sub_id"], 'col':[phenotype]}
 
 
-if dataset == "ionome":
-    # FILES LOADING    
-    datas = FileManager(x_data_path = x_data_path, 
-                        y_data_path = y_data_path, 
-                        ID_data_path = ID_data_path)
-    
-    datas.loadX(header=data_mapper["X"]["load"]["header"], sep=data_mapper["X"]["load"]["sep"])
-    datas.loadY(header=data_mapper["Y"]["load"]["header"], sep=data_mapper["Y"]["load"]["sep"])
-    datas.loadID()
-    
-    
-    print("[INFO] Building dataset on IONOME")
-    # BUILD SUB Y  
-    datas.buildSubYData(method=data_mapper["Y"]["build"][0]["method"], sub_id=data_mapper["Y"]["build"][0]["sub_id"], normalize=normalize, categorize=categorize_data, nb_cluster=nb_cluster, show_cluster=True, save_path=save_path)
-    for i_elem in data_mapper["Y"]["build"][1:]:
-        datas.buildSubYData(method=data_mapper["Y"]["build"][i_elem]["method"], sub_id=data_mapper["Y"]["build"][i_elem]["sub_id"], normalize=normalize, categorize=categorize_data, nb_cluster=nb_cluster, show_cluster=True, save_path=save_path, append=True)
-    
-    # BUILD SUB X 
-    datas.buildSubXData(method=data_mapper["X"]["build"][0]["method"], sub_id=data_mapper["X"]["build"][0]["sub_id"], file=data_mapper["X"]["build"][0]["file"], normalize=True, random=random_2D, reduce_dim=newXdim) # Add Y part in X
-    for i_elem in range(1,len(data_mapper["X"]["build"][1:])):
-        datas.buildSubXData(method=data_mapper["X"]["build"][i_elem]["method"], sub_id=data_mapper["X"]["build"][i_elem]["sub_id"], file=data_mapper["X"]["build"][i_elem]["file"], normalize=True, random=random_2D, append=True, reduce_dim=newXdim) # Add Y part in X
-    
-    # SPLIT TRAIN TEST
-    datas.splitTrainVal(categorize_done=categorize_data, normalize = normalize, nb_cluster=nb_cluster, categorize=post_categorize)
-elif dataset=="boston":
-    print("[INFO] Running dataset on BOSTON")
-    datas = FileManager(x_data_path = x_data_path, 
-                        y_data_path = y_data_path, 
-                        ID_data_path = ID_data_path)
-    datas.loadX(sep=",", header=0)
-    datas.loadY(sep=",", header=0)
-    datas.loadID()
-    var = ["crim","zn","indus","chas","nox","rm", "age", "dis",	"rad", "tax", "ptratio", "black", "lstat", "medv"]
-    var.remove(phenotype)
-    datas.buildSubXData(method="std", sub_id={'col' : var})
-    datas.buildSubYData(method="std", sub_id={'col' : [phenotype]})
-    datas.splitTrainVal()
-elif dataset=="ALE_WSN":
-    print("[INFO] Running dataset on ALE_WSN")
-    datas = FileManager(x_data_path = x_data_path,
-                        y_data_path = y_data_path, 
-                        ID_data_path = ID_data_path)
-    datas.loadX(sep=",", header=0)
-    datas.loadY(sep=",", header=0)
-    datas.loadID()
-    var = ["anchor_ratio","trans_range","node_density","iterations","ale","sd_ale"]
-    var.remove(phenotype)
-    datas.buildSubXData(method="std", sub_id={'col' : var})
-    datas.buildSubYData(method="std", sub_id={'col' : [phenotype]})
-    datas.splitTrainVal()
-else:
-    print("[ERROR] Dataset is unkonwn")
-    raise NotImplementedError
+
+# FILES LOADING    
+datas = FileManager(x_data_path = x_data_path, 
+                    y_data_path = y_data_path, 
+                    ID_data_path = ID_data_path)
+
+datas.loadX(header=data_mapper["X"]["load"]["header"], sep=data_mapper["X"]["load"]["sep"])
+datas.loadY(header=data_mapper["Y"]["load"]["header"], sep=data_mapper["Y"]["load"]["sep"])
+datas.loadID()
+
+
+print("[INFO] Building dataset")
+# BUILD SUB Y  
+datas.buildSubYData(method=data_mapper["Y"]["build"][0]["method"], sub_id=data_mapper["Y"]["build"][0]["sub_id"], normalize=normalize, categorize=categorize_data, nb_cluster=nb_cluster, show_cluster=True, save_path=save_path)
+for i_elem in data_mapper["Y"]["build"][1:]:
+    datas.buildSubYData(method=data_mapper["Y"]["build"][i_elem]["method"], sub_id=data_mapper["Y"]["build"][i_elem]["sub_id"], normalize=normalize, categorize=categorize_data, nb_cluster=nb_cluster, show_cluster=True, save_path=save_path, append=True)
+
+# BUILD SUB X 
+datas.buildSubXData(method=data_mapper["X"]["build"][0]["method"], sub_id=data_mapper["X"]["build"][0]["sub_id"], file=data_mapper["X"]["build"][0]["file"], normalize=True, random=random_2D, reduce_dim=newXdim) # Add Y part in X
+for i_elem in range(1,len(data_mapper["X"]["build"][1:])):
+    datas.buildSubXData(method=data_mapper["X"]["build"][i_elem]["method"], sub_id=data_mapper["X"]["build"][i_elem]["sub_id"], file=data_mapper["X"]["build"][i_elem]["file"], normalize=True, random=random_2D, append=True, reduce_dim=newXdim) # Add Y part in X
+
+# SPLIT TRAIN TEST
+datas.splitTrainVal(categorize_done=categorize_data, normalize = normalize, nb_cluster=nb_cluster, categorize=post_categorize)
 
 with open(filename_json_model, 'r') as f:
         json_models = json.load(f)
@@ -238,7 +208,6 @@ elif method == "Elastic_Classifier_SGD":
     lc.run()
     lc.plot(save_only=True, save_path=save_path+"Elastic_Classifier_SGD/")
 elif method == "MULTI-DNN_demo":
-    assert dataset == "ionome"
     # 1D
     print("Running 1D DNN")
     datas.buildSubXData(method="by_top", sub_id=ktop_1D, file=nth_elem_1D_path)

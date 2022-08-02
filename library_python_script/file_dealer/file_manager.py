@@ -192,13 +192,17 @@ class FileManager():
         
         
 
-    def splitTrainVal(self, target="full", ratio=0.8, random_state=123, categorize_done=None, normalize=True, categorize=None, nb_cluster=3):
-        assert target==self.class_type, "You can't split X, Y in train/test without loading them !"
+    def splitTrainVal(self, train_ID=None, ratio=0.8, random_state=123, categorize_done=None, normalize=True, categorize=None, nb_cluster=3):
         self.sub_x['ID'] = self.ID_full
         data = self.sub_x.merge(self.sub_y, on='ID', how='inner')
-        data = data.drop('ID', axis = 1)
-        data_train = data.sample(frac = ratio, axis = 0, random_state = random_state)
-        data_test = data.drop(data_train.index)
+        if train_ID==None:
+            data = data.drop('ID', axis = 1)
+            data_train = data.sample(frac = ratio, axis = 0, random_state = random_state)
+            data_test = data.drop(data_train.index)
+        else:
+            data_train = data[data['ID'].isin(train_ID)]
+            data = data.drop('ID', axis = 1)
+            data_test = data.drop(data_train.index)
         if normalize:
             mean = data_train.mean()
             std  = data_train.std()

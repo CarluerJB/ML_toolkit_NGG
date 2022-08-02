@@ -65,7 +65,7 @@ class DNN_Classifier(DNN_Predictor):
                         self.data.get_y_train(ravel=False, onehot=True),
                         epochs          = self.epoch,
                         batch_size      = self.batch_size,
-                        verbose         = 0, # self.verbose,
+                        verbose         = self.verbose,
                         validation_data = (self.data.get_x_test(), self.data.get_y_test(ravel=False, onehot=True)),
                         callbacks = [self.callback])
             self.keep_history_memory()
