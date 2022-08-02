@@ -99,5 +99,3 @@ List of mains args :
   - Linear regression with L2 penalisation (Ridge) : Ridge  for prediction
   - Linear regression with L1 and L2 penalisation (ElasticNet) : ElasticNet for prediction and Elastic_Classifier_SGD for class prediction
   - A special model based on DNN, to introduce combined plot function : MULTI-DNN_demo
-  
-  
