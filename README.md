@@ -36,21 +36,21 @@ List of mains args :
 
 	-y_data_path : the path to the phenotype dataset, it should contain at least two column (One for the ID)
 	-x_data_path: the path to the genotype dataset
-  -ID_data_path : the path to the genotype ID list (the intersection with y_data_path will be kept)
-  -nth_elem_1D_path : the path to the nth_element file to select which 1D SNP to keep
+  	-ID_data_path : the path to the genotype ID list (the intersection with y_data_path will be kept)
+  	-nth_elem_1D_path : the path to the nth_element file to select which 1D SNP to keep
 	-nth_elem_2D_path: the path to the nth_element file to select which 2D SNP to keep
-  -save_path : the path to save the results
-  -json_model : the path to the DNN models (see DNN model format for more informations)
+  	-save_path : the path to save the results
+  	-json_model : the path to the DNN models (see DNN model format for more informations)
 	-data_mapper_path : the path to the data_mapper, the data mapper is important to specify X, Y file delimiter/header and to indicate combination methods
-  -p : the phenotype to predict (must be one of the phenotype in the phenotype dataset)
-  -1D : the number of Ktop to keep from the nth_elem_1D file
+  	-p : the phenotype to predict (must be one of the phenotype in the phenotype dataset)
+  	-1D : the number of Ktop to keep from the nth_elem_1D file
 	-2D : the number of Ktop to keep from the nth_elem_2D file
-  -m : the DNN model id (must be one of the model in the json_model file)
-  -random_2D : to specify if you want to randomly generate nth_elem_2D ID's
-  -dataset : the dataset to use default is ionome
-  -method : the method to use (see the method list)
-  -categorize : the method to use to phenotype to class transformation (by_quantile or by_kmeans)
-  -nb_cluster : the number of class for phenotype to class transformation
+  	-m : the DNN model id (must be one of the model in the json_model file)
+  	-random_2D : to specify if you want to randomly generate nth_elem_2D ID's
+  	-dataset : the dataset to use default is ionome
+  	-method : the method to use (see the method list)
+  	-categorize : the method to use to phenotype to class transformation (by_quantile or by_kmeans)
+  	-nb_cluster : the number of class for phenotype to class transformation
   
   ## DNN model format
   
